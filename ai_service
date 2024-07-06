@@ -1,0 +1,17 @@
+import numpy as np
+from sklearn.cluster import KMeans
+
+def categorize_expenses(expenses):
+    # Prepare data for clustering
+    data = np.array([[expense.amount] for expense in expenses])
+
+    # Perform clustering using KMeans
+    kmeans = KMeans(n_clusters=3)
+    kmeans.fit(data)
+
+    # Assign categories based on cluster labels
+    categories = ['Low', 'Medium', 'High']
+    for expense, label in zip(expenses, kmeans.labels_):
+        expense.category = categories[label]
+
+    return expenses
